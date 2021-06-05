@@ -56,10 +56,10 @@ fn main() {
     create_dir(&sync_db_path).expect("Unable to create temp sync directory");
     symlink_file(canonicalize(db_path).unwrap(), cloned_db_path).expect("Cannot create symlink");
 
-    let alpm_handler = alpm::Alpm::new(&tmp_dir_path, &tmp_dir_path).expect("Unable to initialize alpm");
+    let alpm_handler = alpm::Alpm::new(tmp_dir_path.clone(), tmp_dir_path).expect("Unable to initialize alpm");
     let db = alpm_handler.register_syncdb("repo", SigLevel::DATABASE_OPTIONAL).expect("Unable to parse database");
 
-    let packages = db.pkgs().expect("Unable to read package list");
+    let packages = db.pkgs();
     let pkg_meta: Vec<ArchPkg> = packages.into_iter().map(|package|
         ArchPkg { arch: package.arch().unwrap_or("any"), name: package.name(), version: package.version().as_str(), description: package.desc().unwrap_or(""), last_built: package.build_date(), filename: package.filename(), size: package.size() }
     ).collect();

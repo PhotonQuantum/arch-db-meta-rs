@@ -5,7 +5,7 @@ name = "arch-db-meta-rs"
 version = "0.1.0"
 
 [dependencies]
-alpm = "^0.10.2"
+alpm = "2.0"
 serde_json = "^1.0.59"
 symlink = "^0.1.0"
 tempdir = "^0.3.7"
